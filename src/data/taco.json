@@ -1,0 +1,22 @@
+[
+  { "id": 1, "description": "Arroz, branco, cozido", "energy_kcal": 128, "protein_g": 2.5 },
+  { "id": 2, "description": "Feijão, carioca, cozido", "energy_kcal": 76, "protein_g": 4.8 },
+  { "id": 3, "description": "Frango, peito, sem pele, grelhado", "energy_kcal": 159, "protein_g": 32.0 },
+  { "id": 4, "description": "Frango, peito, sem pele, cozido", "energy_kcal": 163, "protein_g": 31.5 },
+  { "id": 5, "description": "Ovo, de galinha, inteiro, cozido", "energy_kcal": 146, "protein_g": 13.3 },
+  { "id": 6, "description": "Ovo, de galinha, clara, cozida", "energy_kcal": 59, "protein_g": 13.4 },
+  { "id": 7, "description": "Batata doce, cozida", "energy_kcal": 77, "protein_g": 0.6 },
+  { "id": 8, "description": "Aveia, em flocos, crua", "energy_kcal": 394, "protein_g": 13.9 },
+  { "id": 9, "description": "Banana, prata, crua", "energy_kcal": 98, "protein_g": 1.3 },
+  { "id": 10, "description": "Carne bovina, patinho, sem gordura, grelhado", "energy_kcal": 219, "protein_g": 35.9 },
+  { "id": 11, "description": "Leite, de vaca, integral", "energy_kcal": 62, "protein_g": 3.3 },
+  { "id": 12, "description": "Leite, de vaca, desnatado", "energy_kcal": 43, "protein_g": 3.2 },
+  { "id": 13, "description": "Queijo, mussarela", "energy_kcal": 330, "protein_g": 22.6 },
+  { "id": 14, "description": "Queijo, minas frescal", "energy_kcal": 264, "protein_g": 17.4 },
+  { "id": 15, "description": "Pão, de forma, integral", "energy_kcal": 253, "protein_g": 9.4 },
+  { "id": 16, "description": "Pão, francês", "energy_kcal": 300, "protein_g": 8.0 },
+  { "id": 17, "description": "Macarrão, de trigo, cozido", "energy_kcal": 137, "protein_g": 4.2 },
+  { "id": 18, "description": "Tapioca, goma", "energy_kcal": 336, "protein_g": 0.2 },
+  { "id": 19, "description": "Atum, conserva em óleo", "energy_kcal": 166, "protein_g": 26.2 },
+  { "id": 20, "description": "Amendoim, torrado, salgado", "energy_kcal": 606, "protein_g": 22.5 }
+]

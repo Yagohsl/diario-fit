@@ -1,6 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
+import { supabase } from "../supabase";
 
+import { toast } from "sonner";
+import { Search, Sparkles } from "lucide-react";
+import baseTACO from "../data/taco.json"; 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -345,6 +349,33 @@ function Index() {
   );
 }
 
+interface ExerciseNinjaResult {
+  name: string;
+  muscle: string;
+  equipment: string;
+  difficulty: string;
+  instructions: string;
+}
+
+const MUSCLE_TRANSLATIONS: Record<string, string> = {
+  abdominals: "Abdômen",
+  abductors: "Abdutores",
+  adductors: "Adutores",
+  biceps: "Bíceps",
+  calves: "Panturrilhas",
+  chest: "Peito",
+  forearms: "Antebraços",
+  glutes: "Glúteos",
+  hamstrings: "Posterior de coxa",
+  lats: "Dorsais / Costas",
+  lower_back: "Lombar",
+  middle_back: "Costas",
+  neck: "Pescoço",
+  quadriceps: "Quadríceps",
+  traps: "Trapézio",
+  triceps: "Tríceps",
+};
+
 function AddSheet({
   tab,
   onClose,
@@ -363,8 +394,92 @@ function AddSheet({
   const [carga, setCarga] = useState("");
   const [kcal, setKcal] = useState("");
   const [proteina, setProteina] = useState("");
+  const [buscandoExercicio, setBuscandoExercicio] = useState(false);
+  const [exerciciosNinja, setExerciciosNinja] = useState<ExerciseNinjaResult[]>([]);
 
   const canSave = name.trim().length > 0;
+
+  // Busca na base local de forma segura, sem travar o modal com alerts
+  const buscarNaBaseLocal = (alimentoEscolhido?: (typeof baseTACO)[number]) => {
+    if (alimentoEscolhido) {
+      setName(alimentoEscolhido.description);
+      setProteina(String(alimentoEscolhido.protein_g));
+      setKcal(String(alimentoEscolhido.energy_kcal));
+      toast.success(`Valores aplicados para: ${alimentoEscolhido.description}`);
+      return;
+    }
+
+    const termoBusca = name.toLowerCase().trim();
+    if (!termoBusca) {
+      toast.warning("Digite o nome de um alimento para buscar.");
+      return;
+    }
+
+    const resultados = baseTACO.filter((item) =>
+      item.description.toLowerCase().includes(termoBusca),
+    );
+
+    if (resultados.length > 0) {
+      const produto = resultados[0];
+      setName(produto.description);
+      setProteina(String(produto.protein_g));
+      setKcal(String(produto.energy_kcal));
+      toast.success(`Alimento encontrado: ${produto.description}`);
+    } else {
+      toast.info("Alimento não encontrado na base rápida. Preencha os macros manualmente.");
+    }
+  };
+
+  const aplicarExercicioNinja = (ex: ExerciseNinjaResult) => {
+    setName(ex.name);
+    const musculoPt = MUSCLE_TRANSLATIONS[ex.muscle.toLowerCase()] || ex.muscle;
+    const equipPt = ex.equipment ? ex.equipment.replace(/_/g, " ") : "";
+    setNote(`${musculoPt}${equipPt ? ` · ${equipPt}` : ""}`);
+    setExerciciosNinja([]);
+    toast.success(`Exercício aplicado: ${ex.name}`);
+  };
+
+  // API NINJAS - Busca de exercícios segura via backend
+  const buscarNaAPINinjas = async () => {
+    const termo = name.trim();
+    if (!termo) {
+      toast.warning("Digite o nome do exercício em inglês (ex: bench press, squat, curl, pushups).");
+      return;
+    }
+
+    setBuscandoExercicio(true);
+
+    try {
+      // Chama a rota de servidor interna /api/exercise
+      const response = await fetch(`/api/exercise?name=${encodeURIComponent(termo)}`);
+
+      if (!response.ok) {
+        throw new Error(`Erro na API (${response.status})`);
+      }
+
+      const data: ExerciseNinjaResult[] = await response.json();
+
+      if (data && data.length > 0) {
+        setExerciciosNinja(data.slice(0, 4));
+        aplicarExercicioNinja(data[0]);
+      } else {
+        toast.info("Nenhum exercício encontrado. Tente buscar o termo em inglês (ex: pushups, squat, bench press).");
+      }
+    } catch (error) {
+      console.error("Erro ao buscar exercícios:", error);
+      toast.error("Falha ao comunicar com o servidor de exercícios.");
+    } finally {
+      setBuscandoExercicio(false);
+    }
+  };
+
+  const sugestoes = useMemo(() => {
+    if (isExercise || !name.trim() || name.length < 2) return [];
+    const q = name.toLowerCase().trim();
+    return baseTACO
+      .filter((item) => item.description.toLowerCase().includes(q))
+      .slice(0, 4);
+  }, [name, isExercise]);
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -427,13 +542,89 @@ function AddSheet({
         </div>
 
         <div className="mt-4 space-y-2.5">
-          <input
-            autoFocus
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder={isExercise ? "Nome do exercício" : "Nome da refeição"}
-            className={inputCls}
-          />
+          {/* CAMPO DE NOME COM BOTÃO DE BUSCA */}
+          <div className="space-y-1.5">
+            <div className="flex gap-2">
+              <input
+                autoFocus
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder={isExercise ? "Nome do exercício (ex: pushups, curl)" : "Ex: Aveia, Frango, Arroz..."}
+                className={`${inputCls} flex-1`}
+              />
+
+              {isExercise ? (
+                <button
+                  type="button"
+                  onClick={buscarNaAPINinjas}
+                  disabled={buscandoExercicio || !name.trim()}
+                  className="flex shrink-0 items-center gap-1.5 rounded-xl bg-primary px-3.5 text-xs font-semibold text-primary-foreground transition-transform active:scale-95 disabled:opacity-50"
+                >
+                  <Search className="size-3.5" />
+                  {buscandoExercicio ? "..." : "Buscar"}
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => buscarNaBaseLocal()}
+                  disabled={!name.trim()}
+                  className="flex shrink-0 items-center gap-1.5 rounded-xl bg-primary px-3.5 text-xs font-semibold text-primary-foreground transition-transform active:scale-95 disabled:opacity-50"
+                >
+                  <Search className="size-3.5" />
+                  Buscar
+                </button>
+              )}
+            </div>
+
+            {/* Sugestões de exercícios retornados pela API Ninjas */}
+            {isExercise && exerciciosNinja.length > 1 && (
+              <div className="rounded-xl border border-white/[0.08] bg-black/40 p-1.5 shadow-md">
+                <p className="px-2 py-1 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+                  Exercícios encontrados (API)
+                </p>
+                <div className="flex flex-col gap-1">
+                  {exerciciosNinja.map((item, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => aplicarExercicioNinja(item)}
+                      className="flex items-center justify-between rounded-lg px-2.5 py-1.5 text-left text-xs text-foreground transition-colors hover:bg-white/[0.08]"
+                    >
+                      <span className="font-medium truncate mr-2">{item.name}</span>
+                      <span className="shrink-0 text-[11px] text-muted-foreground">
+                        {MUSCLE_TRANSLATIONS[item.muscle.toLowerCase()] || item.muscle}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Sugestões rápidas da base local para refeições */}
+            {!isExercise && sugestoes.length > 0 && (
+              <div className="rounded-xl border border-white/[0.08] bg-black/40 p-1.5 shadow-md">
+                <p className="px-2 py-1 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+                  Sugestões da base
+                </p>
+                <div className="flex flex-col gap-1">
+                  {sugestoes.map((item) => (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => buscarNaBaseLocal(item)}
+                      className="flex items-center justify-between rounded-lg px-2.5 py-1.5 text-left text-xs text-foreground transition-colors hover:bg-white/[0.08]"
+                    >
+                      <span className="font-medium truncate mr-2">{item.description}</span>
+                      <span className="shrink-0 text-[11px] text-muted-foreground">
+                        {item.energy_kcal} kcal · {item.protein_g}g prot
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
           <input
             value={note}
             onChange={(e) => setNote(e.target.value)}
