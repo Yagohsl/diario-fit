@@ -178,19 +178,7 @@ function Index() {
 
   return (
     <div className="relative min-h-dvh overflow-x-hidden bg-background font-body text-foreground">
-      {/* soft ambient blobs */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -left-16 -top-24 size-72 rounded-full bg-primary/25 blur-3xl"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-24 top-40 size-64 rounded-full bg-leaf/20 blur-3xl"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute bottom-24 left-1/3 size-56 rounded-full bg-card/60 blur-3xl"
-      />
+
 
       <div className="relative mx-auto w-full max-w-[440px]">
         {/* Sticky header */}

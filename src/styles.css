@@ -5,9 +5,9 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Design system — "Frosted Gym Log"
- * Frosted glass cards on a soft cloud background, ember orange primary,
- * leaf green support, Space Grotesk display + Manrope body.
+ * Design system — "Frosted Gym Log" (dark minimal)
+ * Near-black graphite surfaces, one ember accent, leaf green for macros,
+ * Space Grotesk display + Manrope body. Solid cards, hairline borders.
  */
 
 @theme inline {
@@ -45,27 +45,27 @@
 
 :root {
   --radius: 1rem;
-  --background: oklch(0.966 0.006 255); /* cloud #f2f4f8 */
-  --foreground: oklch(0.26 0.022 260); /* ink #20242c */
-  --card: oklch(0.995 0.002 255);
-  --card-foreground: oklch(0.26 0.022 260);
-  --popover: oklch(0.995 0.002 255);
-  --popover-foreground: oklch(0.26 0.022 260);
-  --primary: oklch(0.655 0.205 42); /* ember #e9542b */
+  --background: oklch(0.165 0.008 260); /* graphite near-black */
+  --foreground: oklch(0.93 0.004 255); /* soft off-white */
+  --card: oklch(0.215 0.01 260);
+  --card-foreground: oklch(0.93 0.004 255);
+  --popover: oklch(0.215 0.01 260);
+  --popover-foreground: oklch(0.93 0.004 255);
+  --primary: oklch(0.665 0.195 42); /* ember #e9542b */
   --primary-foreground: oklch(0.99 0.002 255);
-  --secondary: oklch(0.94 0.008 255);
-  --secondary-foreground: oklch(0.26 0.022 260);
-  --muted: oklch(0.94 0.008 255);
-  --muted-foreground: oklch(0.52 0.02 260);
-  --accent: oklch(0.94 0.008 255);
-  --accent-foreground: oklch(0.26 0.022 260);
-  --destructive: oklch(0.577 0.215 27);
+  --secondary: oklch(0.27 0.01 260);
+  --secondary-foreground: oklch(0.93 0.004 255);
+  --muted: oklch(0.27 0.01 260);
+  --muted-foreground: oklch(0.62 0.012 260);
+  --accent: oklch(0.27 0.01 260);
+  --accent-foreground: oklch(0.93 0.004 255);
+  --destructive: oklch(0.63 0.19 25);
   --destructive-foreground: oklch(0.99 0.002 255);
-  --border: oklch(0.26 0.022 260 / 8%);
-  --input: oklch(0.26 0.022 260 / 10%);
-  --ring: oklch(0.655 0.205 42);
-  --leaf: oklch(0.585 0.115 165); /* leaf #2f8f6b */
-  --leaf-foreground: oklch(0.99 0.002 255);
+  --border: oklch(1 0 0 / 7%);
+  --input: oklch(1 0 0 / 11%);
+  --ring: oklch(0.665 0.195 42);
+  --leaf: oklch(0.7 0.13 165); /* leaf, lifted for dark */
+  --leaf-foreground: oklch(0.16 0.01 260);
 }
 
 .dark {
