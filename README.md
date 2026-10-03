@@ -15,7 +15,7 @@ O projeto foi construído focando em performance, escalabilidade e uma excelente
 <h1></h1>
 <br>
 <div align="center">
-<img width="537" height="586" alt="Animação2" src="https://github.com/user-attachments/assets/1a40ac8a-478f-4fbc-9f8f-ddb99953b703" />
+<img width="50%" alt="Animação2" src="https://github.com/user-attachments/assets/1a40ac8a-478f-4fbc-9f8f-ddb99953b703" />
 </div>
 <h4>Para adicionar uma refeição, vá para a aba "Refeições" e clique no botão de adicionar. Precisará informar o nome da comida, o momento da refeição, as calorias e proteínas. Se a comida existir na base de dados, aparecerá como sugestão para autocompletar, informando sua respectiva quantidade de calorias e proteínas por 100g.</h4>
 <br>
