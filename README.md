@@ -7,6 +7,19 @@
 <h1></h1>
 Esta é uma aplicação web moderna <b>mobile-first</b> voltada para o acompanhamento de rotinas de exercícios, treinos e saúde. 
 O projeto foi construído focando em performance, escalabilidade e uma excelente experiência de desenvolvimento, utilizando as ferramentas mais recentes do ecossistema <b>JavaScript/TypeScript</b>.
+<h1></h1>
+<div align="center">
+  <img width="50%" alt="Animação" src="https://github.com/user-attachments/assets/d7486479-aa60-481a-a078-185a58b99029" />
+</div>
+<h4>Na tela inicial é possível criar e deletar exercícios. Para adicionar um exercício é preciso informar seu nome, grupo muscular, quantidade de séries, repetições e carga. Ao clicar em buscar, o aplicativo autocompleta o nome do exercício e seu respectivo grupo muscular.</h4>
+<h1></h1>
+<br>
+<div align="center">
+<img width="537" height="586" alt="Animação2" src="https://github.com/user-attachments/assets/1a40ac8a-478f-4fbc-9f8f-ddb99953b703" />
+</div>
+<h4>Para adicionar uma refeição, vá para a aba "Refeições" e clique no botão de adicionar. Precisará informar o nome da comida, o momento da refeição, as calorias e proteínas. Se a comida existir na base de dados, aparecerá como sugestão para autocompletar, informando sua respectiva quantidade de calorias e proteínas por 100g.</h4>
+<br>
+<br>
 
 ## 🚀 Tecnologias Utilizadas
 
