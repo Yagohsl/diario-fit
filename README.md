@@ -5,7 +5,7 @@
 <img src="http://img.shields.io/static/v1?label=STATUS&message=FINALIZADO&color=191970&style=for-the-badge"/>
 </p>
 <h1></h1>
-Esta é uma aplicação web moderna voltada para o acompanhamento de rotinas de exercícios, treinos e saúde. 
+Esta é uma aplicação web moderna <b>mobile-first</b> voltada para o acompanhamento de rotinas de exercícios, treinos e saúde. 
 O projeto foi construído focando em performance, escalabilidade e uma excelente experiência de desenvolvimento, utilizando as ferramentas mais recentes do ecossistema <b>JavaScript/TypeScript</b>.
 
 ## 🚀 Tecnologias Utilizadas
